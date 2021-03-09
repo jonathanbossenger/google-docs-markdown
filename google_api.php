@@ -1,22 +1,4 @@
 <?php
-/*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-*/
-// [START docs_quickstart]
-require __DIR__ . '/vendor/autoload.php';
 
 /**
  * Returns an authorized API client.
@@ -25,7 +7,7 @@ require __DIR__ . '/vendor/autoload.php';
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Docs API PHP Quickstart');
+    $client->setApplicationName('Google Docs API For PHP');
     $client->setScopes(Google_Service_Docs::DOCUMENTS_READONLY);
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
@@ -74,15 +56,3 @@ function expandHomeDirectory($path)
     }
     return str_replace('~', realpath($homeDirectory), $path);
 }
-
-// Get the API client and construct the service object.
-$client = getClient();
-$service = new Google_Service_Docs($client);
-
-// Prints the title of the requested doc:
-// https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
-$documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
-$doc = $service->documents->get($documentId);
-
-printf("The document title is: %s\n", $doc->getTitle());
-// [END docs_quickstart]
