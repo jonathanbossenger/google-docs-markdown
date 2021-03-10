@@ -56,3 +56,27 @@ function expandHomeDirectory($path)
     }
     return str_replace('~', realpath($homeDirectory), $path);
 }
+
+/**
+ * Traverse through a document's elements and return the contents
+ *
+ * @param $doc
+ * @return string
+ */
+function getDocContents($doc){
+    $docContent = $doc->getBody()->getContent();
+    $fileContents = '';
+    foreach ($docContent as $contentElement){
+        if (isset($contentElement['paragraph'])){
+            $elements = $contentElement->getParagraph()->getElements();
+            foreach ($elements as $element){
+                $textRun = $element->getTextRun();
+                if(!$textRun){
+                    continue;
+                }
+                $fileContents .= $textRun->getContent();
+            }
+        }
+    }
+    return $fileContents;
+}
