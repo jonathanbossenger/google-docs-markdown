@@ -29,8 +29,8 @@ if (empty($arguments[1])) {
     printf('No document ID specified, exiting.' . PHP_EOL);
     exit();
 }
-$documentId = $arguments[0];
-$outputDirectory = isset($arguments[1]) ? $arguments[0] : getcwd() . DIRECTORY_SEPARATOR;
+$documentId = $arguments[1];
+$outputDirectory = isset($arguments[2]) ? $arguments[2] : getcwd() . DIRECTORY_SEPARATOR;
 
 /**
  * Pull doc and store to file
