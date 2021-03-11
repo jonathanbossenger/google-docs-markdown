@@ -3,6 +3,7 @@
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
+ * @throws \Google\Exception
  */
 function getClient()
 {
@@ -28,7 +29,9 @@ function getClient()
 
         // Store the credentials to disk.
         if (!file_exists(dirname($credentialsPath))) {
-            mkdir(dirname($credentialsPath), 0700, true);
+            if (!mkdir($concurrentDirectory = dirname($credentialsPath), 0700, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
         }
         file_put_contents($credentialsPath, json_encode($accessToken));
         printf("Credentials saved to %s\n", $credentialsPath);
@@ -55,4 +58,28 @@ function expandHomeDirectory($path)
         $homeDirectory = getenv('HOMEDRIVE') . getenv('HOMEPATH');
     }
     return str_replace('~', realpath($homeDirectory), $path);
+}
+
+/**
+ * Traverse through a document's elements and return the contents
+ *
+ * @param $doc
+ * @return string
+ */
+function getDocContents($doc){
+    $docContent = $doc->getBody()->getContent();
+    $fileContents = '';
+    foreach ($docContent as $contentElement){
+        if (isset($contentElement['paragraph'])){
+            $elements = $contentElement->getParagraph()->getElements();
+            foreach ($elements as $element){
+                $textRun = $element->getTextRun();
+                if(!$textRun){
+                    continue;
+                }
+                $fileContents .= $textRun->getContent();
+            }
+        }
+    }
+    return $fileContents;
 }

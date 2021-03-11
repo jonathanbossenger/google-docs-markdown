@@ -1,2 +1,5 @@
+.env
 .idea/
 vendor/
+credentials.json
+token.json
