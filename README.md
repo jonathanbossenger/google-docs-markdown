@@ -2,9 +2,9 @@
 
 Push/pull markdown to/from Google Docs and make suggestions
 
-1. Pull: Get Doc contents and save as local markdown file
-2. Push: Take local Markdown file and push to Google Doc
-3. Suggest: Make (suggestions)[https://developers.google.com/docs/api/how-tos/suggestions], which are effectively deferred edits waiting for approval.
+1. ✅ Pull: Get Doc contents and save as local markdown file
+2. (TBD) Push: Take local Markdown file and push to Google Doc 
+3. (TBD) Suggest: Make (suggestions)[https://developers.google.com/docs/api/how-tos/suggestions], which are effectively deferred edits waiting for approval.
 
 ## Enable Google API
 
