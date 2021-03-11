@@ -22,8 +22,11 @@ $service = new Google_Service_Docs($client);
  * Get arguments
  */
 $arguments = $argv;
-if (empty($arguments[0])) {
-    printf('No document ID specified, exiting');
+/**
+ * The first (0) argument is the script file name, will this be the same when this is a phar?
+ */
+if (empty($arguments[1])) {
+    printf('No document ID specified, exiting.' . PHP_EOL);
     exit();
 }
 $documentId = $arguments[0];
@@ -32,12 +35,19 @@ $outputDirectory = isset($arguments[1]) ? $arguments[0] : getcwd() . DIRECTORY_S
 /**
  * Pull doc and store to file
  */
-$doc = $service->documents->get($documentId);
-printf("Retrieving the document : %s\n", $doc->getTitle());
+try {
+    $doc = $service->documents->get($documentId);
+} catch (Google\Service\Exception $e){
+    $message = json_decode($e->getMessage());
+    printf($message->error->message . PHP_EOL);
+    exit;
+}
+
+printf('Retrieving the document : %s' . PHP_EOL, $doc->getTitle());
 
 $fileName = $slugify->slugify($doc->getTitle()).'.md';
 $fileContents = getDocContents($doc);
 
 file_put_contents($outputDirectory . $fileName, $fileContents);
 
-printf("Created file : %s\n", $outputDirectory . $fileName);
+printf('Created file : %s' . PHP_EOL, $outputDirectory . $fileName);

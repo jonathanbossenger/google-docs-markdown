@@ -11,6 +11,7 @@ Push/pull markdown to/from Google Docs and make suggestions
 As at 2021/03/10
 
 - Go to https://developers.google.com/docs/api/quickstart/php
+- Change the project name if you prefer (eg Docs Markdown)
 - Click the Enable the Google Docs API button
 - Give the project a name, click Next
 - Configure OAuth Client for Desktop app, click Create
